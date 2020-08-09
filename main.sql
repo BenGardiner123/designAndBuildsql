@@ -2,7 +2,7 @@
 
 -- TASK 1 CREATE THE SCHEMA
 
-/* EVENT(EventYear, EventMonth, EventDay,Fee)
+/* EVENT(TourName, EventYear, EventMonth, EventDay,Fee)
 PK: TourName, EventYear, EventMonth, EventDay
 FK: TourName REFERENCES TOUR
 
@@ -15,7 +15,5 @@ FK: TourName, EventYear, EventMonth, EventDay REFERENCES EVENT
 CLIENT(ClientID, Surname, GivenName, Gender)
 PK: ClientID
 
-
 TOUR(TourName, Descriotion)
 PK: TourName */
-
