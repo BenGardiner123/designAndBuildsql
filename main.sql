@@ -164,3 +164,72 @@ ON e.TourName = t.TourName;
 
 GO
 
+-- task 6 
+
+SELECT cl.GivenName, cl.Surname, b.TourName, t.Description, b.EventYear, b.EventMonth, b.EventDay, b.DateBooked, e.Fee, b.Payment
+FROM  Booking b 
+left JOIN Event e 
+ON e.TourName = b.TourName
+AND e.EventYear = b.EventYear
+AND e.EventMonth = b.EventMonth
+AND e.EventDay = b.EventDay
+
+LEFT JOIN CLIENT cl
+ON cl.ClientID = b.ClientID
+
+LEFT JOIN Tour t
+ON e.TourName = t.TourName;
+
+
+SELECT count(*)
+FROM  Booking b 
+left JOIN Event e 
+ON e.TourName = b.TourName
+AND e.EventYear = b.EventYear
+AND e.EventMonth = b.EventMonth
+AND e.EventDay = b.EventDay
+
+LEFT JOIN CLIENT cl
+ON cl.ClientID = b.ClientID
+
+LEFT JOIN Tour t
+ON e.TourName = t.TourName;
+
+GO 
+
+-- we can see the added acolums againt the query
+
+
+-----------------------------QUERY 2 TEST BELOW --------------------------------------
+
+
+SELECT B.EventMonth, B.TourName, COUNT(B.DateBooked) as'Num_Bookings'
+FROM BOOKING B
+GROUP BY B.EventMonth, B.TourName
+ORDER BY B.EventMonth DESC, B.TourName ASC;  
+
+SELECT count(*) as "Total Bookings"
+FROM BOOKING B
+
+GO
+
+-- /checking using the  COUNT(*) function which returns the number of rows excluding nulls. We can see it matches.
+
+-- Whilst we could also match by outputting all the entries in enrolment i this small DB that would not be feasbile using a large dataset.
+
+-----------------------------QUERY 3 TEST BELOW --------------------------------------
+
+SElect count(*) as "Total num_bookings"
+FROM BOOKING 
+WHERE payment > (SELECT AVG(payment) from Booking);
+SELECT *
+FROM BOOKING 
+WHERE payment > (SELECT AVG(payment) from Booking);
+
+-- /checking using the  COUNT(*) function which returns the number of rows excluding nulls. We can see it matches.
+
+-- Whilst we could also match by outputting all the entries in enrolment i this small DB that would not be feasbile using a large dataset.
+
+
+GO
+
