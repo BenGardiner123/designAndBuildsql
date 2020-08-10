@@ -19,17 +19,13 @@ TOUR(TourName, Descriotion)
 PK: TourName */
 
 -- TASK 2 ----------------------------------------------------------
-/* DROP TABLE IF EXISTS BOOKING;
+DROP TABLE IF EXISTS BOOKING;
 DROP TABLE IF EXISTS EVENT;
 DROP TABLE IF EXISTS CLIENT;
 DROP TABLE IF EXISTS Tour;
-SELECT * 
-FROM sys.tables; 
 
-go   */
+GO
  
-
-
 CREATE TABLE TOUR (
 TourName NVARCHAR(100), 
 Description NVARCHAR(500),
@@ -70,8 +66,7 @@ FOREIGN KEY (ClientID) REFERENCES CLIENT,
 FOREIGN KEY (TourName, EventYear, EventMonth, EventDay) REFERENCES EVENT
 );
 
-go
-
+GO
 
 
 INSERT INTO TOUR(TourName, Description) VALUES  
@@ -108,3 +103,43 @@ GO
  
 SELECT *
 FROM client;  
+ 
+GO 
+
+-- query 1
+
+SELECT cl.GivenName, cl.Surname, b.TourName, t.Description, b.EventYear, b.EventMonth, b.EventDay, b.DateBooked, e.Fee, b.Payment
+FROM  Booking b 
+left JOIN Event e 
+ON e.TourName = b.TourName
+AND e.EventYear = b.EventYear
+AND e.EventMonth = b.EventMonth
+AND e.EventDay = b.EventDay
+
+LEFT JOIN CLIENT cl
+ON cl.ClientID = b.ClientID
+
+LEFT JOIN Tour t
+ON e.TourName = t.TourName;
+
+GO 
+
+-- query 2
+
+SELECT B.EventMonth, B.TourName, COUNT(B.DateBooked) as'Num_Bookings'
+FROM BOOKING B
+GROUP BY B.EventMonth, B.TourName
+ORDER BY B.EventMonth DESC, B.TourName ASC;  
+
+GO
+
+-- query 3
+
+SELECT *
+FROM BOOKING 
+WHERE payment > (SELECT AVG(payment) from Booking);
+
+
+
+
+
