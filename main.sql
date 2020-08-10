@@ -139,7 +139,28 @@ SELECT *
 FROM BOOKING 
 WHERE payment > (SELECT AVG(payment) from Booking);
 
+GO
 
+-- task 5 
 
+CREATE VIEW FullBooking 
+AS 
+SELECT cl.GivenName, cl.Surname, b.TourName, t.Description, b.EventYear, b.EventMonth, b.EventDay, 
+b.DateBooked, 
+e.Fee,
+b.Payment
+FROM  Booking b 
+left JOIN Event e 
+ON e.TourName = b.TourName
+AND e.EventYear = b.EventYear
+AND e.EventMonth = b.EventMonth
+AND e.EventDay = b.EventDay
 
+LEFT JOIN CLIENT cl
+ON cl.ClientID = b.ClientID
+
+LEFT JOIN Tour t
+ON e.TourName = t.TourName;
+
+GO
 
